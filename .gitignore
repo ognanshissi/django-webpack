@@ -1,0 +1,13 @@
+.idea/
+src/.idea
+.vscode/
+node_modules/
+
+
+###> For ReactJS ###
+src/static/js/build/*
+
+bin/
+share/
+include/
+lib/

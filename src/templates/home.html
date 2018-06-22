@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+{% load render_bundle webpack_static from webpack_loader %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <title> {% block title %}Django webpack ReactJS{% endblock %} </title>
+
+    {% block stylesheets %}
+        {% render_bundle 'css/app' %}
+    {% endblock %}
+    <noscript>Javascript is needed to run this app</noscript>
+</head>
+<body>
+{% block content %}
+    <div id="root">
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% render_bundle 'js/bundle' %}
+{% endblock %}
+</body>
+</html>

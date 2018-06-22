@@ -1,0 +1,5 @@
+Django webpack Reactjs Boilerplate
+==================================
+
+
+

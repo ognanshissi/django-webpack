@@ -1,0 +1,31 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev-server": "encore dev-server --hot --watch",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production"
+  },
+  "author": "Ambroise Bazie",
+  "license": "ISC",
+  "dependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "script": "^0.1.4"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.20.1",
+    "babel-core": "^6.26.3",
+    "babel-preset-react": "^6.24.1",
+    "font-awesome": "^4.7.0",
+    "node-sass": "^4.9.0",
+    "postcss-loader": "^2.1.5",
+    "sass-loader": "^7.0.3",
+    "url-loader": "^1.0.1",
+    "webpack-bundle-tracker": "^0.3.0"
+  }
+}

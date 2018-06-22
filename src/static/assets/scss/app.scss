@@ -1,0 +1,24 @@
+//@import "~font-awesome/scss/font-awesome.scss";
+@import "variable";
+
+body{
+  background-color: #f4f4f4;
+}
+
+header, main, footer {
+  padding-left: 300px;
+}
+
+main{
+  min-height: 100vh;
+}
+
+#content{
+  padding: 10px 0;
+}
+
+@media only screen and (max-width: 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
