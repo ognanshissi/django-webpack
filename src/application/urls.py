@@ -31,3 +31,14 @@ Will on debug mode you can use this ways to load static file, Thing to avide on 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+"""
+Use this link if you dont django to support HTTP Request/Response,
+
+This process will be handle by your front-end framework ( eg:. Reactjs)
+"""
+
+# urlpatterns += [
+#     url(r'(?P<path>.*)', HomeView.as_view(), name='home') # use this link
+# ]
