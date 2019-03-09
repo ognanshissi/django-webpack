@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.urls import path, re_path
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
@@ -21,24 +21,26 @@ from django.conf import settings
 from .views import HomeView
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'$', HomeView.as_view(), name='home')
+    path(r'^admin/', admin.site.urls),
+    re_path(r'$', HomeView.as_view(), name='home')
 ]
 
 """
 Will on debug mode you can use this ways to load static file, Thing to avide on production
 """
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
 
 """
-Use this link if you dont django to support HTTP Request/Response,
+Use this link if you dont want django to support HTTP Request/Response,
 
-This process will be handle by your front-end framework ( eg:. Reactjs)
+This process will be handled by your front-end framework ( eg:. Reactjs) in my case i use reactjs 
 """
 
-# urlpatterns += [
-#     url(r'(?P<path>.*)', HomeView.as_view(), name='home') # use this link
-# ]
+urlpatterns += [
+    re_path(r'(?P<path>.*)', HomeView.as_view(), name='home')  # use this link
+]

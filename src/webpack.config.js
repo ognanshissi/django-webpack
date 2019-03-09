@@ -1,52 +1,83 @@
-const Encore = require('@symfony/webpack-encore');
+const path = require('path');
 const BundleTracker = require('webpack-bundle-tracker');
+const webpack = require('webpack');
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const ManifestPlugin = require('webpack-manifest-plugin');
 
-Encore
-    .setOutputPath('static/build/')
-    .setPublicPath('/static/build')
-    .cleanupOutputBeforeBuild()
-    .enableSourceMaps(!Encore.isProduction())
-    // .autoProvidejQuery()
-    // .autoProvideVariables({
-    //     "window.Bloodhound": require.resolve('bloodhound-js'),
-    //     "jQuery.tagsinput": "bootstrap-tagsinput"
-    // })
-    .enableSassLoader()
-    .enableReactPreset()
-    .enableVersioning(false)
-    // .createSharedEntry('js/common', ['jquery'])
-    .addEntry('js/bundle', './static/assets/js/index.js')
-    // .addEntry('js/contact', './static/assets/js/contact.js')
-    .addStyleEntry('css/app', ['./static/assets/scss/app.scss'])
-    .addPlugin(new BundleTracker({filename: './webpack-stats.json'}))
-;
+let cssLoader = [
+    {
+        loader: 'style-loader'
+    },
+    {
+        loader: "css-loader", options: { importLoaders: 1 }
+    }
+];
+let config = {
+    context: __dirname,
+    entry: {
+        // common: './static/js/common.js',
+        bundle: './static/assets/js/app.js',
+        // host: './static/host.js'
+    },
+    output: {
+        path: path.resolve('./static/build/js'),
+        filename: '[name].js'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/, use: ["babel-loader"], exclude: '/node_modules'
+            },
+            {
+                test: /\.scss$/,
+                use: [...cssLoader, 'sass-loader']
+            },
+            {
+                test: /\.css$/,
+                use: [...cssLoader]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use:
+                    [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 8192
+                            }
+                        }
+                    ]
+            }
+        ]
+    },
 
-module.exports = Encore.getWebpackConfig();
+    plugins: [
+        new BundleTracker({ filename: './webpack-stats.json' }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        })
+    ]
+}
+    ;
 
+// simple test for development mode
+module.exports = function (env, argv) {
+    console.log(argv.mode)
 
-//
-// let config = {
-//     context: __dirname,
-//     entry: {
-//         app: './static/js/app.js'
-//     },
-//     output: {
-//         path: path.resolve('./static/dist/js/'),
-//         filename: '[name]-[hash].js'
-//     },
-//
-//     module: {
-//         rules: [
-//             {
-//                 test: /\.js$/, use: ['babel-loader']
-//             }
-//         ]
-//     },
-//
-//     plugins: [
-//         new BundleTracker({filename: './webpack-stats.json'})
-//     ]
-// };
-//
-//
-// module.exports = config;
+    if (argv.mode === 'development') {
+        config.devtool = 'source-map';
+        cssLoader.push({
+            loader: 'postcss-loader',
+            options: {
+                plugins: (loader) => [
+                    require('autoprefixer')({
+                        browsers: ['last 2 versions', 'ie >= 7', 'safari >= 7']
+                    })
+                ]
+            }
+        })
+    }
+
+    return config;
+};

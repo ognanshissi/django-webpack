@@ -8,19 +8,16 @@
     <title> {% block title %}Django webpack ReactJS{% endblock %} </title>
 
     {% block stylesheets %}
-        {% render_bundle 'css/app' %}
     {% endblock %}
-    <noscript>Javascript is needed to run this app</noscript>
+    <noscript>Javascript is needed to run this application</noscript>
 </head>
 <body>
 {% block content %}
-    <div id="root">
-
-    </div>
+    <div id="root"></div>
 {% endblock %}
 
 {% block javascripts %}
-{% render_bundle 'js/bundle' %}
+{% render_bundle 'bundle' %}
 {% endblock %}
 </body>
 </html>
